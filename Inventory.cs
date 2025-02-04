@@ -18,5 +18,12 @@ namespace w4_TRPG
         {
             itemList.Remove(item);
         }
+        public void Show()
+        {
+            foreach (var item in itemList)
+            {
+                Console.WriteLine($"");
+            }
+        }
     }
 }

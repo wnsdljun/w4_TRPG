@@ -10,6 +10,14 @@ namespace w4_TRPG
     {
         string Name { get; }
         string Description { get; }
-        public void Use(Warrior warrior);
+    }
+
+    public interface IEquipable : IItem
+    {
+        bool IsEquiped { get; set; }
+    }
+    public interface IConsumable : IItem 
+    {
+
     }
 }
