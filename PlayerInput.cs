@@ -2,44 +2,48 @@
 {
     internal class PlayerInput
     {
+        private static bool b = false;
         private static string WriteWaitingInput()
         {
             Console.Write(">>>");
             return Console.ReadLine() ?? ""; //Null-Coalescing Operator: 좌항이 null 이면 우항을 반환. 이거 개꿀이자너...!
         }
-        /// <summary>
-        /// 사용자 입력을 받는 메서드.
-        /// </summary>
-        /// <returns>입력이 비어있거나 null이라면 false</returns>
-        public static bool ReadInput(out string result)
+
+        private static bool ReadInput(out string result)
         {
             string str = WriteWaitingInput();
             if (string.IsNullOrWhiteSpace(str)) //null: ctrl+z 입력시, 비어있거나 빈칸만 존재하는경우.
             {
                 result = "";
-                return false;
+                return false; //입력 실패
             }
             result = str;
-            return true;
+            return true; //입력 성공
         }
-        /// <summary>
-        /// 사용자 입력을 받는 메서드.
-        /// </summary>
-        /// <param name="result"></param>
-        /// <param name="tip">tip을 출력하고 입력을 기다립니다.</param>
-        /// <returns>입력이 비어있거나 null이라면 false</returns>
+
+        public static string ReadInput(string failMessage = "입력값은 비워둘 수 없습니다.") //틀렸을 경우 메시지 출력.
+        {
+            while (true)
+            {
+                Console.SetCursorPosition(0, Console.WindowHeight - 2); //입력 위치를 창 맨 밑으로 고정
+                Console.Write(new string(' ', Console.WindowWidth)); //기존 메시지 지우기
+                Console.SetCursorPosition(0, Console.WindowHeight - 2); //커서 위치 재설정
+
+                if (ReadInput(out string result)) return result; //정상 입력시 바로 반환.
+
+                Console.SetCursorPosition(0, Console.WindowHeight - 3);
+                Console.Write(new string(' ', Console.WindowWidth)); // 기존 메시지 지우기
+                Console.SetCursorPosition(0, Console.WindowHeight - 3);
+                Console.WriteLine(failMessage);
+            }
+        }
+
         public static bool ReadInput(out string result, string tip)
         {
             Console.WriteLine(tip);
             return ReadInput(out result);
         }
-        /// <summary>
-        /// 사용자 입력을 받는 메서드.
-        /// </summary>
-        /// <param name="result"></param>
-        /// <param name="failMessage">이전 실행 결과</param>
-        /// <param name="previousResult"></param>
-        /// <returns></returns>
+
         public static bool ReadInput(out string result, string failMessage, bool previousResult)
         {
             if (!previousResult)
@@ -49,11 +53,17 @@
             return ReadInput(out result);
         }
 
-        /// <summary>
-        /// 사용자 입력을 받는 메서드.
-        /// </summary>
-        /// <param name="result"></param>
-        /// <returns>입력이 숫자가 아니라면 false</returns>
+
+
+
+
+
+
+
+
+
+
+
         public static bool ReadInput(out int result)
         {
             string str = WriteWaitingInput();
@@ -67,13 +77,7 @@
             result = 0;
             return false;
         }
-        /// <summary>
-        /// 사용자 입력을 받는 메서드.
-        /// </summary>
-        /// <param name="result"></param>
-        /// <param name="lowest">입력받을 수 있는 숫자 중 가장 낮은 번호</param>
-        /// <param name="highest">입력받을 수 있는 숫자 중 가장 높은 번호</param>
-        /// <returns>입력받은 값이 숫자이고, lowest<= 입력 <= highest 라면 true, 아니면 false</returns>
+
         public static bool ReadInput(out int result, int lowest, int highest)
         {
             string str = WriteWaitingInput();
