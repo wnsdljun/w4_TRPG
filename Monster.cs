@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace w4_TRPG
 {
-    internal class Monster : ICharacter
+    public class Monster : ICharacter
     {
+        public int Level { get; set; }
         public string Name { get; }
         public int Health { get; set; }
         public int Attack => new Random().Next(10, 20);
-
+        public int Defense {  get; set; }
         public bool IsDead => Health <= 0;
 
         public Monster(string name, int health)

@@ -8,17 +8,26 @@ namespace w4_TRPG
 {
     public class Warrior : ICharacter
     {
+        public int Level {  get; }
         public string Name { get; }
+        public Profession Profession => Profession.Warrior;
         public int Health { get; set; }
+        public int Defense { get; set; }
         public int AttackPower { get; set; }
         public int Attack => new Random().Next(10, AttackPower);
         public bool IsDead => Health <= 0;
+        public int Money { get; set; }
+        public Inventory Inventory { get; set; }
 
         public Warrior(string name)
         {
             Name = name;
             Health = 100;
-            AttackPower = 20;
+            AttackPower = 10;
+            Defense = 5;
+            Money = 1500;
+            Level = 1;
+            Inventory = new Inventory();
         }
         public void TakeDamage(int damage)
         {

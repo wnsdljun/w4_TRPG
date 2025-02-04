@@ -1,6 +1,6 @@
 ﻿namespace w4_TRPG
 {
-    internal class PlayerInput
+    public class PlayerInput
     {
         private static string WriteWaitingInput()
         {

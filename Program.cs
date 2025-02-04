@@ -26,6 +26,7 @@
                 {
                     Console.Clear();
                     Console.WriteLine($"[{str}] 정말 이 이름을 사용하시겠습니까?");
+                    Console.WriteLine("");
                     Console.WriteLine("1. 네");
                     Console.WriteLine("2. 아니오");
 
@@ -49,11 +50,55 @@
 
 
                 int enter = PlayerInput.ReadInput(1, 3);
+                switch (enter)
+                {
+                    case 1: //상태 보기
+                        ShowStat(player);
+                        break;
+                    case 2: //인벤토리
+                        ShowInventory(player);
+                        break;
+                    case 3: //상점
+
+                        break;
+                }
             }
 
 
 
 
+        }
+
+        public static void ShowStat(Warrior warrior)
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("상태 보기");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("캐릭터의 정보가 표시됩니다.\n");
+            Console.WriteLine("Lv. {0}", warrior.Level.ToString("00"));
+            Console.WriteLine("Chad {0}", warrior.Profession);
+            Console.WriteLine("공격력 : {0}", warrior.AttackPower);
+            Console.WriteLine("방어력 : {0}", warrior.Defense);
+            Console.WriteLine("체 력 : {0}", warrior.Health);
+            Console.WriteLine("Gold : {0} G", warrior.Money);
+            Console.WriteLine("");
+            Console.WriteLine("0. 나가기");
+            PlayerInput.ReadInput(0,0);
+        }
+        public static void ShowInventory(Warrior warrior)
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("인벤토리");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
+            Console.WriteLine("");
+            Console.WriteLine("[아이템 목록]");
+            Console.WriteLine("");
+            Console.WriteLine("1. 장착 관리");
+            Console.WriteLine("0. 나가기");
+            PlayerInput.ReadInput(0, 1);
         }
     }
 }

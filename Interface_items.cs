@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace w4_TRPG
 {
-    internal interface IItem
+    public interface IItem
     {
         string Name { get; }
-
+        string Description { get; }
         public void Use(Warrior warrior);
     }
 }

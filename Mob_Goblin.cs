@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace w4_TRPG
 {
-    internal class Goblin : Monster
+    public class Goblin : Monster
     {
         public Goblin(string name) : base(name, 50) { }
     }

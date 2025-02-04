@@ -8,10 +8,17 @@ namespace w4_TRPG
 {
     public interface ICharacter
     {
+        int Level { get; }
         string Name { get; }
-        int Health { get; set; }
         int Attack { get; }
+        int Defense { get; }
+        int Health { get; set; }
         bool IsDead { get; }
         void TakeDamage(int damage);
+    }
+
+    public enum Profession
+    {
+        Warrior = 0
     }
 }
