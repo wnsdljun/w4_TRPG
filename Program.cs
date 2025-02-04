@@ -37,6 +37,13 @@
                     break;
                 }
             }
+
+            player.Inventory.AddItem(new Weapon_BronzeAxe());
+            player.Inventory.AddItem(new Weapon_oldSword());
+            player.Inventory.AddItem(new Weapon_spartanSpear());
+            player.Inventory.AddItem(new Armor_castIron());
+            player.Inventory.AddItem(new Armor_novice());
+            player.Inventory.AddItem(new Armor_spartan());
             while (true)
             {
                 Console.Clear();
@@ -93,6 +100,7 @@
             Console.WriteLine("인벤토리");
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
+            warrior.Inventory.Show();
             Console.WriteLine("");
             Console.WriteLine("[아이템 목록]");
             Console.WriteLine("");
