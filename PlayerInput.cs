@@ -2,7 +2,6 @@
 {
     internal class PlayerInput
     {
-        private static bool b = false;
         private static string WriteWaitingInput()
         {
             Console.Write(">>>");
@@ -21,8 +20,10 @@
             return true; //입력 성공
         }
 
-        public static string ReadInput(string failMessage = "입력값은 비워둘 수 없습니다.") //틀렸을 경우 메시지 출력.
+        public static string ReadInput(string failMessage = "입력값은 비워둘 수 없습니다.", string tip = "") //틀렸을 경우 메시지 출력.
         {
+            Console.SetCursorPosition(0, Console.WindowHeight - 4);
+            Console.WriteLine(string.IsNullOrEmpty(tip) ? tip : $"입력 가이드: {tip}");
             while (true)
             {
                 Console.SetCursorPosition(0, Console.WindowHeight - 2); //입력 위치를 창 맨 밑으로 고정
@@ -37,30 +38,6 @@
                 Console.WriteLine(failMessage);
             }
         }
-
-        public static bool ReadInput(out string result, string tip)
-        {
-            Console.WriteLine(tip);
-            return ReadInput(out result);
-        }
-
-        public static bool ReadInput(out string result, string failMessage, bool previousResult)
-        {
-            if (!previousResult)
-            {
-                Console.WriteLine(failMessage);
-            }
-            return ReadInput(out result);
-        }
-
-
-
-
-
-
-
-
-
 
 
 

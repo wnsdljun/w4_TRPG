@@ -16,7 +16,7 @@
                 Console.WriteLine("[경고]이름을 새로 입력하는 경우 이미 저장된 세이브파일이 덮어씌워질 수 있습니다.");
 
 
-                string str = PlayerInput.ReadInput();
+                string str = PlayerInput.ReadInput("수줍어 말고 뭐라도 적을 수 있도록!");
                 if (str == "이어하기")
                 {
                     Console.WriteLine("미구현");
