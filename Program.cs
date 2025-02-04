@@ -39,7 +39,7 @@ namespace w4_TRPG
                     break;
                 }
             }
-
+            return;
             player.Inventory.AddItem(new Weapon_BronzeAxe());
             player.Inventory.AddItem(new Weapon_oldSword());
             player.Inventory.AddItem(new Weapon_spartanSpear());
