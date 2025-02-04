@@ -10,7 +10,7 @@ namespace w4_TRPG
     {
         int Level { get; }
         string Name { get; }
-        int Attack { get; }
+        int BaseAttackPower { get; }
         int Defense { get; }
         int Health { get; set; }
         bool IsDead { get; }

@@ -6,7 +6,7 @@ namespace w4_TRPG
     {
         static void Main(string[] args)
         {
-            Warrior player;
+            Player player;
 
             //시작 화면
             while (true)
@@ -35,11 +35,10 @@ namespace w4_TRPG
                     if (PlayerInput.ReadInput(1, 2) == 2) continue; //아니오 선택 시 다시 루프
 
                     //예 선택 시 워리어 이름 넣어 생성해 넣기.
-                    player = new Warrior(str);
+                    player = new Player(str, Profession.Warrior, 100, 5, 10, 1500, 1);
                     break;
                 }
             }
-            return;
             player.Inventory.AddItem(new Weapon_BronzeAxe());
             player.Inventory.AddItem(new Weapon_oldSword());
             player.Inventory.AddItem(new Weapon_spartanSpear());
@@ -78,7 +77,7 @@ namespace w4_TRPG
 
         }
 
-        public static void ShowStat(Warrior warrior)
+        public static void ShowStat(Player warrior)
         {
             while (true)
             {
@@ -89,8 +88,8 @@ namespace w4_TRPG
                 Console.WriteLine("캐릭터의 정보가 표시됩니다.\n");
                 Console.WriteLine("Lv. {0}", warrior.Level.ToString("00"));
                 Console.WriteLine("Chad {0}", warrior.Profession);
-                Console.WriteLine("공격력 : {0}", warrior.AttackPower);
-                Console.WriteLine("방어력 : {0}", warrior.Defense);
+                Console.WriteLine($"공격력 : {warrior.GetTotalAttackpower()}{(warrior.GetAdditionalAttackpower() > 0 ? $" (+{warrior.GetAdditionalAttackpower()})" : "")}");
+                Console.WriteLine($"방어력 : {warrior.GetTotalDefensepower()}{(warrior.GetAdditionalDefensepower() > 0 ? $" (+{warrior.GetAdditionalDefensepower()})" : "")}");
                 Console.WriteLine("체 력 : {0}", warrior.Health);
                 Console.WriteLine("Gold : {0} G", warrior.Money);
                 Console.WriteLine("");
@@ -99,7 +98,7 @@ namespace w4_TRPG
                 return;
             }
         }
-        public static void ShowInventory(Warrior warrior)
+        public static void ShowInventory(Player warrior)
         {
             while (true)
             {
@@ -125,7 +124,7 @@ namespace w4_TRPG
             }
         }
 
-        public static void ManageEquipment(Warrior warrior)
+        public static void ManageEquipment(Player warrior)
         {
             int showTipMessgeType = 0;
             while (true)

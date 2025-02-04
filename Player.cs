@@ -1,32 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace w4_TRPG
+﻿namespace w4_TRPG
 {
-    public class Warrior : ICharacter
+    public class Player : ICharacter
     {
-        public int Level {  get; }
+        public int Level { get; }
         public string Name { get; }
-        public Profession Profession => Profession.Warrior;
+        public Profession Profession { get; }
         public int Health { get; set; }
         public int Defense { get; set; }
-        public int AttackPower { get; set; }
-        public int Attack => new Random().Next(10, AttackPower);
+        public int BaseAttackPower { get; set; }
+        //public int Attack => new Random().Next(10, AttackPower);
         public bool IsDead => Health <= 0;
         public int Money { get; set; }
         public Inventory Inventory { get; set; }
 
-        public Warrior(string name)
+        public Player(string name, Profession profession, int health, int defense, int attackPower, int money, int level = 1)
         {
+            Level = level;
             Name = name;
-            Health = 100;
-            AttackPower = 10;
-            Defense = 5;
-            Money = 1500;
-            Level = 1;
+            Profession = profession;
+            Health = health;
+            Defense = defense;
+            BaseAttackPower = attackPower;
+            Money = money;
+
             Inventory = new Inventory();
         }
         public void TakeDamage(int damage)
@@ -40,6 +36,42 @@ namespace w4_TRPG
             {
                 Console.WriteLine($"{Name}이(가) {damage}의 데미지를 받았습니다. 남은 체력: {Health}");
             }
+        }
+        public int GetTotalAttackpower()
+        {
+            int additionalPower = 0;
+            foreach (var item in Inventory.GetItemsinInventory())
+            {
+                if (item is Weapon tem) additionalPower += tem.IsEquiped ? tem.AttackIncrement : 0;
+            }
+            return BaseAttackPower + additionalPower;
+        }
+        public int GetTotalDefensepower()
+        {
+            int additionalPower = 0;
+            foreach (var item in Inventory.GetItemsinInventory())
+            {
+                if (item is Armor tem) additionalPower += tem.IsEquiped ? tem.DefenseIncrement : 0;
+            }
+            return Defense + additionalPower;
+        }
+        public int GetAdditionalAttackpower()
+        {
+            int additionalPower = 0;
+            foreach (var item in Inventory.GetItemsinInventory())
+            {
+                if (item is Weapon tem) additionalPower += tem.IsEquiped ? tem.AttackIncrement : 0;
+            }
+            return additionalPower;
+        }
+        public int GetAdditionalDefensepower()
+        {
+            int additionalPower = 0;
+            foreach (var item in Inventory.GetItemsinInventory())
+            {
+                if (item is Armor tem) additionalPower += tem.IsEquiped ? tem.DefenseIncrement : 0;
+            }
+            return additionalPower;
         }
     }
 }

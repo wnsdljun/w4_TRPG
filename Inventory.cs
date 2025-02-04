@@ -61,5 +61,10 @@ namespace w4_TRPG
                 Console.WriteLine($"{item.Name} | {type} | {item.Description}");
             }
         }
+
+        public List<IItem> GetItemsinInventory()
+        {
+            return new List<IItem>(itemList);
+        }
     }
 }
