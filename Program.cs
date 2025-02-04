@@ -1,4 +1,6 @@
-﻿namespace w4_TRPG
+﻿using System.Threading;
+
+namespace w4_TRPG
 {
     internal class Program
     {
@@ -78,35 +80,97 @@
 
         public static void ShowStat(Warrior warrior)
         {
-            Console.Clear();
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("상태 보기");
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("캐릭터의 정보가 표시됩니다.\n");
-            Console.WriteLine("Lv. {0}", warrior.Level.ToString("00"));
-            Console.WriteLine("Chad {0}", warrior.Profession);
-            Console.WriteLine("공격력 : {0}", warrior.AttackPower);
-            Console.WriteLine("방어력 : {0}", warrior.Defense);
-            Console.WriteLine("체 력 : {0}", warrior.Health);
-            Console.WriteLine("Gold : {0} G", warrior.Money);
-            Console.WriteLine("");
-            Console.WriteLine("0. 나가기");
-            PlayerInput.ReadInput(0,0);
+            while (true)
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.WriteLine("상태 보기");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("캐릭터의 정보가 표시됩니다.\n");
+                Console.WriteLine("Lv. {0}", warrior.Level.ToString("00"));
+                Console.WriteLine("Chad {0}", warrior.Profession);
+                Console.WriteLine("공격력 : {0}", warrior.AttackPower);
+                Console.WriteLine("방어력 : {0}", warrior.Defense);
+                Console.WriteLine("체 력 : {0}", warrior.Health);
+                Console.WriteLine("Gold : {0} G", warrior.Money);
+                Console.WriteLine("");
+                Console.WriteLine("0. 나가기");
+                PlayerInput.ReadInput(0, 0); //어차피 선택지 하나밖에 없으니 이부분 통과하면 복귀
+                return;
+            }
         }
         public static void ShowInventory(Warrior warrior)
         {
-            Console.Clear();
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("인벤토리");
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
-            warrior.Inventory.Show();
-            Console.WriteLine("");
-            Console.WriteLine("[아이템 목록]");
-            Console.WriteLine("");
-            Console.WriteLine("1. 장착 관리");
-            Console.WriteLine("0. 나가기");
-            PlayerInput.ReadInput(0, 1);
+            while (true)
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.WriteLine("인벤토리");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
+                Console.WriteLine("");
+                Console.WriteLine("[아이템 목록]");
+                warrior.Inventory.Show();
+                Console.WriteLine("");
+                Console.WriteLine("1. 장착 관리");
+                Console.WriteLine("0. 나가기");
+                switch (PlayerInput.ReadInput(0, 1))
+                {
+                    case 0:
+                        return;
+                    case 1:
+                        ManageEquipment(warrior);
+                        break;
+                }
+            }
+        }
+
+        public static void ManageEquipment(Warrior warrior)
+        {
+            int showTipMessgeType = 0;
+            while (true)
+            {
+                
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.WriteLine("인벤토리 - 장착 관리");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
+                Console.WriteLine("");
+                Console.WriteLine("[아이템 목록]");
+                warrior.Inventory.Show(true);
+                Console.WriteLine("");
+                Console.WriteLine("0. 나가기");
+                Console.SetCursorPosition(0, Console.WindowHeight - 5);
+                switch (showTipMessgeType)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        Console.Write("장착했습니다.");
+                        break;
+                    case 2:
+                        Console.Write("장착 해제 했습니다.");
+                        break;
+                    case 3:
+                        Console.Write("장착할 수 없는 아이템입니다.");
+                        break;
+                }
+                int enter = PlayerInput.ReadInput(0, warrior.Inventory.sortedItemList!.Count);
+                if (enter == 0) return;
+                else
+                {
+                    if (warrior.Inventory.sortedItemList[enter - 1] is IEquipable equipable)
+                    {
+                        equipable.IsEquiped = equipable.IsEquiped ? false : true;
+                        showTipMessgeType = equipable.IsEquiped ? 1 : 2;
+                        continue;
+                    }
+                    showTipMessgeType = 3;
+                    continue;
+                }
+            }
+
         }
     }
 }

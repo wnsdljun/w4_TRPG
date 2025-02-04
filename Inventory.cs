@@ -10,6 +10,7 @@ namespace w4_TRPG
     public class Inventory
     {
         private List<IItem> itemList = new List<IItem>();
+        public List<IItem>? sortedItemList;
 
         public void AddItem(IItem item)
         {
@@ -19,10 +20,11 @@ namespace w4_TRPG
         {
             itemList.Remove(item);
         }
-        public void Show()
+        public void Show(bool showIndex = false)
         {
+            int index = 1;
             //우선 아이템을 정렬
-            var sorted = itemList.OrderBy(item =>
+            sortedItemList = itemList.OrderBy(item =>
             {
                 if (item is Weapon) return 0;
                 if (item is Armor) return 1;
@@ -30,7 +32,7 @@ namespace w4_TRPG
             }).ToList();
 
             //아이템 출력
-            foreach (var item in sorted)
+            foreach (var item in sortedItemList)
             {
                 //출력 양식 맞추기...(?)
                 bool isEquiped = false;
@@ -47,7 +49,7 @@ namespace w4_TRPG
 
 
                 //출력부
-                Console.Write(" - ");
+                Console.Write(" {0} ",showIndex ? index++ : "-");
                 if (isEquiped)
                 {
                     Console.Write('[');
