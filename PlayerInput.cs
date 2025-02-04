@@ -7,7 +7,6 @@
             Console.Write(">>>");
             return Console.ReadLine() ?? ""; //Null-Coalescing Operator: 좌항이 null 이면 우항을 반환. 이거 개꿀이자너...!
         }
-
         private static bool ReadInput(out string result)
         {
             string str = WriteWaitingInput();
@@ -19,7 +18,6 @@
             result = str;
             return true; //입력 성공
         }
-
         public static string ReadInput(string failMessage = "입력값은 비워둘 수 없습니다.", string tip = "") //틀렸을 경우 메시지 출력.
         {
             Console.SetCursorPosition(0, Console.WindowHeight - 4);
@@ -38,37 +36,34 @@
                 Console.WriteLine(failMessage);
             }
         }
-
-
-
-        public static bool ReadInput(out int result)
+        public static int ReadInput()
         {
-            string str = WriteWaitingInput();
-            bool parsable = int.TryParse(str, out int num);
-
-            if (parsable)
+            while (true)
             {
-                result = num;
-                return true;
+                string str = ReadInput(tip: "숫자를 입력해 주세요.");
+                bool parseSuccess = int.TryParse(str, out int num);
+                if (parseSuccess) return num;
+                Console.SetCursorPosition(0, Console.WindowHeight - 3);
+                Console.Write(new string(' ', Console.WindowWidth)); // 기존 메시지 지우기
+                Console.SetCursorPosition(0, Console.WindowHeight - 3);
+                Console.WriteLine("입력값은 숫자여야 합니다.");
             }
-            result = 0;
-            return false;
+
+        }
+        public static int ReadInput(int lowest, int highest)
+        {
+            while (true)
+            {
+                int num = ReadInput();
+                if (num >= lowest && num <= highest) return num;
+                Console.SetCursorPosition(0, Console.WindowHeight - 3);
+                Console.Write(new string(' ', Console.WindowWidth)); // 기존 메시지 지우기
+                Console.SetCursorPosition(0, Console.WindowHeight - 3);
+                Console.WriteLine($"입력값은 {lowest}에서 {highest}까지여야 합니다.");
+            }
+
         }
 
-        public static bool ReadInput(out int result, int lowest, int highest)
-        {
-            string str = WriteWaitingInput();
-            bool parsable = int.TryParse(str, out int num);
-            if (parsable)
-            {
-                if (lowest <= num && num <= highest)
-                {
-                    result = num;
-                    return true;
-                }
-            }
-            result = 0;
-            return false;
-        }
+
     }
 }
