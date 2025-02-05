@@ -1,6 +1,6 @@
 ﻿namespace w4_TRPG
 {
-    public interface IItem
+    public interface IItem : IStackable
     {
         string Name { get; }
         string Description { get; }
@@ -11,11 +11,11 @@
         bool IsStackable { get; }
     }
 
-    public interface IEquipable : IItem , IStackable
+    public interface IEquipable : IItem
     {
         bool IsEquiped { get; set; }
     }
-    public interface IConsumable : IItem , IStackable
+    public interface IConsumable : IItem
     {
 
     }

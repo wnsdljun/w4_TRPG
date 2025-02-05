@@ -6,7 +6,7 @@
         public abstract string Description { get; }
         public bool IsEquiped { get; set; } = false;
         public abstract int DefenseIncrement { get; }
-        public int Count => 1;
+        public int Count => 1; 
         public bool IsStackable => false;
     }
 }

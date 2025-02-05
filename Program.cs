@@ -7,11 +7,7 @@ namespace w4_TRPG
         static void Main(string[] args)
         {
             Player player;
-
-            int[] i = { 1, 2, 3, 4, 5 };
-            
-            Console.WriteLine(i.Sum());
-            return;
+            Shop normalShop;
             //시작 화면
             while (true)
             {
@@ -40,15 +36,23 @@ namespace w4_TRPG
 
                     //예 선택 시 워리어 이름 넣어 생성해 넣기.
                     player = new Player(str, Profession.Warrior, 100, 5, 10, 1500, 1);
+
+                    normalShop = new Shop();
+                    normalShop.AddStock(new Weapon_oldSword(), 600, 2);
+                    normalShop.AddStock(new Weapon_BronzeAxe(), 1500, 2);
+                    normalShop.AddStock(new Weapon_spartanSpear(), 3500, 1);
+                    normalShop.AddStock(new Armor_novice(), 800, 1);
+                    normalShop.AddStock(new Armor_castIron(), 1500, 1);
+                    normalShop.AddStock(new Armor_spartan(), 3500, 1);
                     break;
                 }
             }
             player.Inventory.AddItem(new Weapon_BronzeAxe());
             player.Inventory.AddItem(new Weapon_oldSword());
-            player.Inventory.AddItem(new Weapon_spartanSpear());
+            //player.Inventory.AddItem(new Weapon_spartanSpear());
             player.Inventory.AddItem(new Armor_castIron());
             player.Inventory.AddItem(new Armor_novice());
-            player.Inventory.AddItem(new Armor_spartan());
+            //player.Inventory.AddItem(new Armor_spartan());
             while (true)
             {
                 Console.Clear();
@@ -71,7 +75,7 @@ namespace w4_TRPG
                         ShowInventory(player);
                         break;
                     case 3: //상점
-
+                        ShowShop(player, normalShop);
                         break;
                 }
             }
@@ -80,9 +84,87 @@ namespace w4_TRPG
 
 
         }
-        public static void ShowShop(Player player)
+        public static void ShowShop(Player player, Shop shop)
         {
+            while (true)
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.WriteLine("상점");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
+                Console.WriteLine("");
+                Console.WriteLine("[보유 골드]");
+                Console.WriteLine($"{player.Money} G");
+                Console.WriteLine("");
+                Console.WriteLine("[아이템 목록]");
+                shop.Show(player);
+                Console.WriteLine("");
+                Console.WriteLine("1. 아이템 구매");
+                Console.WriteLine("0. 나가기");
+                switch (PlayerInput.ReadInput(0, 1))
+                {
+                    case 0:
+                        return;
+                    case 1:
+                        Trade(player,shop);
+                        break;
+                }
+            }
+        }
 
+        public static void Trade(Player player, Shop shop)
+        {
+            TransactionCode code = TransactionCode.Empty;
+            while (true)
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.WriteLine("상점");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
+                Console.WriteLine("");
+                Console.WriteLine("[보유 골드]");
+                Console.WriteLine($"{player.Money} G");
+                Console.WriteLine("");
+                Console.WriteLine("[아이템 목록]");
+                shop.Show(player, true);
+                Console.WriteLine("");
+                Console.WriteLine("0. 나가기");
+                Console.SetCursorPosition(0, Console.WindowHeight - 5);
+                switch (code) //코드에 맞게 표시
+                {
+                    case TransactionCode.Empty:
+                        break;
+                    case TransactionCode.NoItem:
+                        Console.Write("우리집은 그런거 안 팔아요~");
+                        break;
+                    case TransactionCode.OutOfStock:
+                        Console.Write("다 팔려서 없어유~");
+                        break;
+                    case TransactionCode.OverCount:
+                        Console.Write("그만큼은 업서!");
+                        break;
+                    case TransactionCode.NotEnoughMoney:
+                        Console.Write("돈 더 갖고 와!");
+                        break;
+                    case TransactionCode.Success:
+                        Console.Write("성공적으로 구매하였습니다.");
+                        break;
+                    case TransactionCode.Error:
+                        Console.Write("알 수 없는 오류");
+                        break;
+
+                }
+
+                int enter = PlayerInput.ReadInput(0, shop.stock.Count);
+                if (enter == 0) return;
+                else
+                {
+                    code = shop.Sell(player, shop.stock.Keys.ElementAt(enter - 1), 1);
+                    continue;
+                }
+            }
         }
         public static void ShowStat(Player warrior)
         {
