@@ -8,6 +8,10 @@ namespace w4_TRPG
         {
             Player player;
 
+            int[] i = { 1, 2, 3, 4, 5 };
+            
+            Console.WriteLine(i.Sum());
+            return;
             //시작 화면
             while (true)
             {
@@ -76,7 +80,10 @@ namespace w4_TRPG
 
 
         }
+        public static void ShowShop(Player player)
+        {
 
+        }
         public static void ShowStat(Player warrior)
         {
             while (true)
@@ -98,6 +105,7 @@ namespace w4_TRPG
                 return;
             }
         }
+
         public static void ShowInventory(Player warrior)
         {
             while (true)
