@@ -8,6 +8,13 @@ namespace w4_TRPG
         {
             Player player;
             Shop normalShop;
+
+            IItem oldSword = new Weapon_oldSword();
+            IItem bronzeAxe = new Weapon_BronzeAxe();
+            IItem spartanSpear = new Weapon_spartanSpear();
+            IItem novice = new Armor_novice();
+            IItem castIron = new Armor_castIron();
+            IItem spartan = new Armor_spartan();
             //시작 화면
             while (true)
             {
@@ -38,20 +45,20 @@ namespace w4_TRPG
                     player = new Player(str, Profession.Warrior, 100, 5, 10, 1500, 1);
 
                     normalShop = new Shop();
-                    normalShop.AddStock(new Weapon_oldSword(), 600, 2);
-                    normalShop.AddStock(new Weapon_BronzeAxe(), 1500, 2);
-                    normalShop.AddStock(new Weapon_spartanSpear(), 3500, 1);
-                    normalShop.AddStock(new Armor_novice(), 800, 1);
-                    normalShop.AddStock(new Armor_castIron(), 1500, 1);
-                    normalShop.AddStock(new Armor_spartan(), 3500, 1);
+                    normalShop.AddStock(oldSword, 600, 2);
+                    normalShop.AddStock(bronzeAxe, 1500, 2);
+                    normalShop.AddStock(spartanSpear, 3500, 1);
+                    normalShop.AddStock(novice, 800, 1);
+                    normalShop.AddStock(castIron, 1500, 1);
+                    normalShop.AddStock(spartan, 3500, 1);
                     break;
                 }
             }
-            player.Inventory.AddItem(new Weapon_BronzeAxe());
-            player.Inventory.AddItem(new Weapon_oldSword());
+            //player.Inventory.AddItem(new Weapon_BronzeAxe());
+            player.Inventory.AddItem(oldSword);
             //player.Inventory.AddItem(new Weapon_spartanSpear());
-            player.Inventory.AddItem(new Armor_castIron());
-            player.Inventory.AddItem(new Armor_novice());
+            //player.Inventory.AddItem(new Armor_castIron());
+            player.Inventory.AddItem(novice);
             //player.Inventory.AddItem(new Armor_spartan());
             while (true)
             {
